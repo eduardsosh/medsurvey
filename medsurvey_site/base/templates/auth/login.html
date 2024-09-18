@@ -1,0 +1,12 @@
+<!-- templates/auth/login.html -->
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content%}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% translate "Ienākt" %}</button>
+</form>
+<p>{% translate "Neesi reģitrējies?"%} <a href='/register'> {% translate "reģistrēties" %}</a></p>
+{% endblock%}
