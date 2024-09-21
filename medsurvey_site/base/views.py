@@ -9,6 +9,7 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext as _
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -24,7 +25,7 @@ def log_out(request):
 @csrf_protect
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -33,6 +34,6 @@ def register(request):
         else:
             messages.error(request, _('Registration failed. Please correct the errors below.'))
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     
     return render(request, 'auth/register.html', {'form': form})
