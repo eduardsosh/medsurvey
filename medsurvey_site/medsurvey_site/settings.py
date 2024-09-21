@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    "crispy_bootstrap5",
     'base',
 ]
 
@@ -128,4 +130,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'  # Where to redirect if login is required
 LOGIN_REDIRECT_URL = '/'  # After login, redirect to the homepage or desired location
 LOGOUT_REDIRECT_URL = '/'  # After logout, redirect to homepage or other page
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
