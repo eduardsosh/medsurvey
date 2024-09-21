@@ -35,4 +35,5 @@ class RegistrationTest(TestCase):
 
 
 class LoginTest(TestCase):
+    
     pass
