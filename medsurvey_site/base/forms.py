@@ -10,10 +10,11 @@ class CustomUserCreationForm(UserCreationForm):
     last_name = forms.CharField(max_length=256, required=True,label=_("Last name"))
     personal_number = forms.CharField(max_length=12,required=True,label=_("Personal code"))
     gender = forms.ChoiceField(choices=UserAdditionalData.Gender,required=True,label=_("Gender"))
+    accept = forms.BooleanField(required=True,label=_("I accept the terms and conditions"))
 
     class Meta:
         model = User
-        fields = ("username", "email", 'first_name','last_name','gender','personal_number',"password1", "password2")
+        fields = ("username", "email", 'first_name','last_name','gender','personal_number',"password1", "password2",'accept')
 
     def save(self, commit=True):
         user = super().save(commit=False)
