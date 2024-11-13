@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from base.models import UserAdditionalData
 
 class RegistrationTest(TestCase):
     def test_registration_success(self):
@@ -9,7 +10,12 @@ class RegistrationTest(TestCase):
             'username': 'testuser',
             'email': 'test@email.com',
             'password1': 'testpassword123',
-            'password2': 'testpassword123'
+            'password2': 'testpassword123',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-12345',
+            'accept' : True,
         })
         self.assertEqual(response.status_code, 302)  # Assuming a redirect on success
         self.assertTrue(User.objects.filter(username='testuser').exists())
@@ -20,7 +26,12 @@ class RegistrationTest(TestCase):
             'username': 'testuser',
             'email': 'test@email.com',
             'password1': 'testpassword123',
-            'password2': 'differentpassword'
+            'password2': 'differentpassword',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-12345',
+            'accept' : True,
         })
         self.assertEqual(response.status_code, 200)  # Assuming form re-render on failure
         self.assertFalse(User.objects.filter(username='testuser').exists())
@@ -31,18 +42,60 @@ class RegistrationTest(TestCase):
             'username': '',
             'email': 'test@email.com',
             'password1': 'testpassword123',
-            'password2': 'testpassword123'
+            'password2': 'testpassword123',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-12345',
+            'accept' : True,
         })
         self.assertEqual(response.status_code, 200)  # Assuming form re-render on failure
         self.assertFalse(User.objects.filter(username='').exists())
 
-    def test_registration_missing_fields(self):
+    def test_registration_worng_email(self):
         """Test that registration fails when email is incorrect form."""
         response = self.client.post(reverse('register'), {
             'username': 'testuser',
             'email': 'testemail.com',
             'password1': 'testpassword123',
-            'password2': 'testpassword123'
+            'password2': 'testpassword123',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-12345',
+            'accept' : True,
+        })
+        self.assertEqual(response.status_code, 200)  # Assuming form re-render on failure
+        self.assertFalse(User.objects.filter(username='').exists())
+    
+    def test_registration_no_accept(self):
+        """Test that registration fails when accept is false."""
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'email': 'testemail.com',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-12345',
+            'accept' : False,
+        })
+        self.assertEqual(response.status_code, 200)  # Assuming form re-render on failure
+        self.assertFalse(User.objects.filter(username='').exists())
+
+    def test_registration_wrong_len_personal_number(self):
+        """Test that registration fails when personal number is too long."""
+        response = self.client.post(reverse('register'), {
+            'username': 'testuser',
+            'email': 'testemail.com',
+            'password1': 'testpassword123',
+            'password2': 'testpassword123',
+            'first_name' : 'Jane',
+            'last_name' : 'Doe',
+            'gender' : UserAdditionalData.Gender.FEMALE,
+            'personal_number' : '123456-123456',
+            'accept' : False,
         })
         self.assertEqual(response.status_code, 200)  # Assuming form re-render on failure
         self.assertFalse(User.objects.filter(username='').exists())
