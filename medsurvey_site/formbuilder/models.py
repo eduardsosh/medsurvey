@@ -23,6 +23,3 @@ class Answer(models.Model):
     answer = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
 
-class Examiner(models.Model):
-    user = models.OneToOneField(User,on_delete=models.DO_NOTHING)
-    institution = models.CharField(max_length=256, help_text="Institution that the examiner works for")
