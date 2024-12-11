@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
@@ -9,7 +9,8 @@ from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext as _
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomUserEditForm
+from .models import UserAdditionalData, User
 
 # Create your views here.
 
@@ -37,3 +38,25 @@ def register(request):
         form = CustomUserCreationForm()
     
     return render(request, 'auth/register.html', {'form': form})
+
+@login_required
+def view_user_data(request):
+    additional_data_object = UserAdditionalData.objects.get(base_user=request.user)
+    context = {
+        'user' : request.user,
+        'additional_data': additional_data_object
+    }
+    return render(request, 'profile.html', context)
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = CustomUserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Redirect to profile page after saving
+    else:
+        form = CustomUserEditForm(instance=user)
+
+    return render(request, 'edit_profile.html', {'form': form})

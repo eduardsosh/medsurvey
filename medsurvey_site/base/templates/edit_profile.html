@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+{% trans ""%}
+
+<div class="container mt-4">
+    <h2>{% trans "Edit Profile" %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-8">
+                {{ form|crispy }}
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary mt-3">{% trans "Save Changes" %}</button>
+        </div>
+    </form>
+    <div class="form-group mt-3">
+        <a href="{% url 'profile' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+    </div>
+</div>
+{% endblock %}

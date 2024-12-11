@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4>{% trans "User Profile" %}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">{{ user.username }}</h5>
+                            <p class="card-text"><strong>{% trans "Full Name" %}:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                            <p class="card-text"><strong>{% trans "Email" %}:</strong> {{ user.email }}</p>
+                            <p class="card-text"><strong>{% trans "Personal number" %}:</strong> {{ additional_data.personal_code }}</p>
+                            <p class="card-text"><strong>{% trans "Gender" %}:</strong> {{ additional_data.get_gender_display }}</p>
+                            <p class="card-text"><strong>{% trans "Last Login" %}:</strong> {{ user.last_login|date:"d/m/Y" }}</p>
+                            <p class="card-text"><strong>{% trans "Account Created" %}:</strong> {{ user.date_joined|date:"d/m/Y" }}</p>
+
+                            <a href="{% url 'edit-profile' %}" class="btn btn-warning">Edit Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
