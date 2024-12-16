@@ -16,9 +16,9 @@
                 <p class="mb-1">{{ form.description|linebreaksbr }}</p>
                 <small class="text-muted">{% trans "Created on" %} {{ form.creation_date_time | date:"d.m.Y h:m"}}</small>
             </div>
-            <div>
-                <!-- Replace 'edit_form' with the appropriate URL name and pass form.id if needed -->
-                <a href="{% url 'edit_form' form.id %}" class="btn btn-sm btn-primary">{% trans "Edit" %}</a>
+            <div class="d-flex flex-column">
+                <a href="{% url 'edit_form' form.id %}" class="btn btn-sm btn-primary mb-2">{% trans "Edit" %}</a>
+                <a href="{% url 'edit_questions' form.id %}" class="btn btn-sm btn-primary">{% trans "Edit questions" %}</a>
             </div>
         </li>
     {% endfor %}

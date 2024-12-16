@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Form
+from .models import Form, Question
 import datetime
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
@@ -69,3 +69,12 @@ class FormEditForm(ModelForm):
             # Disable end_date if it has already passed or is today
             if self.instance.end_date and self.instance.end_date <= today:
                 self.fields['end_date'].disabled = True
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['title', 'description', 'order', 'type', 'mandatory', 'options']
+        widgets = {
+            'options': forms.HiddenInput()
+        }

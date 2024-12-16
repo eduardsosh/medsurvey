@@ -7,4 +7,5 @@ urlpatterns = [
     path('create-form/', views.create_form, name='create_form'),
     path('my-created-forms/', views.view_created_forms, name='view_created_forms'),
     path('form/<int:pk>/edit/', views.edit_form, name='edit_form'),
+    path('form/<int:form_id>/edit-questions/', views.edit_questions, name='edit_questions'),
 ]

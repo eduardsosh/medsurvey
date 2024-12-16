@@ -31,7 +31,7 @@ class Question(models.Model):
         CHOICE = 2, _("Choice")
         MCHOICE = 3, _("Multiple choice")
     title = models.CharField(max_length=200, null=False)
-    description = models.CharField(max_length=200, null=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
     order = models.IntegerField(null=False)
     type = models.IntegerField(choices=QuestionType)
