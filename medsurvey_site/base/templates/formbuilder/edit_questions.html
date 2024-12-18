@@ -20,54 +20,65 @@
     {% endif %}
 
     <h2 class="mt-4">{% trans "Existing Questions" %}</h2>
-    {% if questions %}
-        <table class="table table-bordered mt-3">
-            <thead class="table-light">
-                <tr>
-                    <th scope="col">{% trans "Order" %}</th>
-                    <th scope="col">{% trans "Title" %}</th>
-                    <th scope="col">{% trans "Type" %}</th>
-                    <th scope="col">{% trans "Mandatory" %}</th>
-                    <th scope="col">{% trans "Options" %}</th>
-                    <th scope="col">{% trans "Actions" %}</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for question in questions %}
-                <tr>
-                    <td>{{ question.order }}</td>
-                    <td>{{ question.title }}</td>
-                    <td>
-                        {% if question.type == question.QuestionType.TEXT_FIELD %}
-                            {% trans "Text field" %}
-                        {% elif question.type == question.QuestionType.TEXT_AREA %}
-                            {% trans "Text area" %}
-                        {% elif question.type == question.QuestionType.CHOICE %}
-                            {% trans "Choice" %}
-                        {% elif question.type == question.QuestionType.MCHOICE %}
-                            {% trans "Multiple choice" %}
-                        {% endif %}
-                    </td>
-                    <td>{{ question.mandatory|yesno:_("Yes,No") }}</td>
-                    <td>
-                        {% if question.options %}
-                            <pre>{{ question.options|safe }}</pre>
-                        {% else %}
-                            <em>{% trans "No options" %}</em>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <!-- Placeholder for edit/delete actions -->
-                        <a href="#" class="btn btn-sm btn-secondary disabled">{% trans "Edit" %}</a>
-                        <a href="#" class="btn btn-sm btn-danger disabled">{% trans "Delete" %}</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p><em>{% trans "No questions found." %}</em></p>
-    {% endif %}
+{% if questions %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">{% trans "Title" %}</th>
+                <th scope="col">{% trans "Type" %}</th>
+                <th scope="col">{% trans "Mandatory" %}</th>
+                <th scope="col">{% trans "Options" %}</th>
+                <th scope="col">{% trans "Actions" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+            <tr>
+                <td>{{ question.title }}</td>
+                <td>
+                    {% if question.type == question.QuestionType.TEXT_FIELD %}
+                        {% trans "Text field" %}
+                    {% elif question.type == question.QuestionType.TEXT_AREA %}
+                        {% trans "Text area" %}
+                    {% elif question.type == question.QuestionType.CHOICE %}
+                        {% trans "Choice" %}
+                    {% elif question.type == question.QuestionType.MCHOICE %}
+                        {% trans "Multiple choice" %}
+                    {% endif %}
+                </td>
+                <td>{{ question.mandatory|yesno:_("Yes,No") }}</td>
+                <td>
+                    {% if question.options %}
+                        <ul>
+                            {% for opt in question.options %}
+                                <li>{{ opt }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>{% trans "No options" %}</em>
+                    {% endif %}
+                </td>
+                <td class="text-nowrap">
+                    <!-- Edit and Delete (currently disabled as placeholder) -->
+                    <a href="#" class="btn btn-sm btn-secondary disabled">{% trans "Edit" %}</a>
+                    <a href="{% url 'delete_question' question.id %}" class="btn btn-sm btn-danger">{% trans "Delete" %}</a>
+
+                    <!-- Move Up/Down Arrows -->
+                    <!-- Replace '#' with actual URLs or named URL patterns for reordering -->
+                    <a href="{% url 'move_question_up' question.id %}" class="btn btn-sm btn-outline-primary" title="{% trans 'Move up' %}">
+                        <i class="bi bi-arrow-up"></i>
+                    </a>
+                    <a href="{% url 'move_question_down' question.id %}" class="btn btn-sm btn-outline-primary" title="{% trans 'Move down' %}">
+                        <i class="bi bi-arrow-down"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p><em>{% trans "No questions found." %}</em></p>
+{% endif %}
 
     <!-- Add New Question Button -->
     <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
@@ -87,18 +98,13 @@
           </div>
           <div class="modal-body">
               <div class="mb-3">
-                <label for="id_title" class="form-label">{% trans "Title" %}</label>
+                <label for="id_title" class="form-label">{% trans "Title*" %}</label>
                 {{ question_form.title }}
               </div>
   
               <div class="mb-3">
                 <label for="id_description" class="form-label">{% trans "Description" %}</label>
                 {{ question_form.description }}
-              </div>
-  
-              <div class="mb-3">
-                <label for="id_order" class="form-label">{% trans "Order" %}</label>
-                {{ question_form.order }}
               </div>
   
               <div class="mb-3">

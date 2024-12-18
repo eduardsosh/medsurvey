@@ -25,6 +25,7 @@ class UserForms(models.Model):
 
 
 class Question(models.Model):
+    default_dict = {}
     class QuestionType(models.IntegerChoices):
         TEXT_FIELD = 0, _("Text field")
         TEXT_AREA = 1, _("Text area")
@@ -33,10 +34,10 @@ class Question(models.Model):
     title = models.CharField(max_length=200, null=False)
     description = models.CharField(max_length=200, null=True, blank=True)
     form = models.ForeignKey(Form, on_delete=models.CASCADE)
-    order = models.IntegerField(null=False)
+    order = models.PositiveSmallIntegerField(null=False, blank=True)
     type = models.IntegerField(choices=QuestionType)
     mandatory = models.BooleanField()
-    options = models.JSONField(null=True)
+    options = models.JSONField(null=True, default=dict, blank=True)
     
 class Submission(models.Model):
     form = models.ForeignKey(Form, on_delete=models.CASCADE)

@@ -15,4 +15,9 @@
             <button type="submit" class="btn btn-primary mt-3">{% trans "Save Changes" %}</button>
         </div>
     </form>
+    <br>
+    <form method="POST" action="{% url 'delete_form' form_instance.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Form</button>
+    </form>
 {% endblock%}
