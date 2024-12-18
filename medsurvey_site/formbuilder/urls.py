@@ -12,5 +12,8 @@ urlpatterns = [
     path('question/<int:question_id>/move-up/', views.move_question_up, name='move_question_up'),
     path('question/<int:question_id>/move-down/', views.move_question_down, name='move_question_down'),
     path('question/<int:question_id>/delete/', views.delete_question, name='delete_question'),
+    path('my-forms/', views.view_my_assigned_forms, name='my-forms'),
+    path('form/<int:form_id>/participants', views.view_participants, name='view_participants'),
+    path('form/<int:form_id>/add_participants', views.add_participants, name='add_participants'),
 
 ]

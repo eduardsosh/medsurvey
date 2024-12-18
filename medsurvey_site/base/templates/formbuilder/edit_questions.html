@@ -98,34 +98,34 @@
           </div>
           <div class="modal-body">
               <div class="mb-3">
-                <label for="id_title" class="form-label">{% trans "Title*" %}</label>
+                <label for="id_title" class="form-label">{% trans "Title*" %}</label><br>
                 {{ question_form.title }}
               </div>
   
               <div class="mb-3">
-                <label for="id_description" class="form-label">{% trans "Description" %}</label>
+                <label for="id_description" class="form-label">{% trans "Description" %}</label><br>
                 {{ question_form.description }}
               </div>
   
               <div class="mb-3">
-                <label for="id_type" class="form-label">{% trans "Type" %}</label>
+                <label for="id_type" class="form-label">{% trans "Type" %}</label><br>
                 {{ question_form.type }}
               </div>
   
               <div class="form-check mb-3">
                 {{ question_form.mandatory }}
-                <label class="form-check-label" for="id_mandatory">{% trans "Mandatory" %}</label>
+                <label class="form-check-label" for="id_mandatory">{% trans "Mandatory" %}</label><br>
               </div>
   
               <!-- Initially hidden; shown only if type is Choice or Multiple Choice -->
               <div class="mb-3 d-none" id="dynamic-options-container">
-                  <label class="form-label">{% trans "Options" %}</label>
-                  <button type="button" id="add-option-button" class="btn btn-sm btn-secondary mb-2">
-                      {% trans "Add Option" %}
-                  </button>
-                  
+                <label class="form-label">{% trans "Options" %}</label>
                   {{ question_form.options }}
               </div>
+              
+              <button type="button" id="add-option-button" class="btn btn-sm btn-secondary mb-2">
+                  {% trans "Add Option" %}
+              </button>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Close" %}</button>

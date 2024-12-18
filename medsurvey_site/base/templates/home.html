@@ -1,14 +1,53 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block content%}
-    <body>
-        <h1>Hello world! Pages available:</h1>
-        <ul>
-            <li>Register</li>
-            <li>Login</li>
-            <li>Home</li>
-            <li>Admin</li>
-        </ul>
-    </body>
-{% endblock%}
+{% block title %}{% trans "Main Page" %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if user.is_authenticated %}
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body text-center p-5">
+                            <h2 class="card-title mb-4">
+                                {% trans "Welcome," %} <strong>{{ user.username }}</strong>!
+                            </h2>
+                            
+                            {% if user.examiner %}
+                                <div class="d-grid gap-4">
+                                    <a href="{% url 'view_created_forms' %}" class="btn btn-primary btn-lg">
+                                        <i class="bi bi-eye"></i> {% trans "View Created Forms" %}
+                                    </a>
+                                    <a href="{% url 'create_form' %}" class="btn btn-success btn-lg">
+                                        <i class="bi bi-plus-circle"></i> {% trans "Create New Form" %}
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="d-grid gap-4">
+                                    <a href="{% url 'my-forms' %}" class="btn btn-info btn-lg">
+                                        <i class="bi bi-folder"></i> {% trans "View My Assigned Forms" %}
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <h3 class="card-title mb-3">{% trans "Welcome to Our Platform!" %}</h3>
+                            <p class="mb-4">{% trans "Please log in to continue." %}</p>
+                            <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> {% trans "Login" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

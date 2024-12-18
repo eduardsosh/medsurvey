@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "My forms" %}
+{% endblock %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{% trans "Participants" %}</h2>
+    <table id="participantsTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>{% trans "Username" %}</th>
+                <th>{% trans "First Name" %}</th>
+                <th>{% trans "Last Name" %}</th>
+                <th>{% trans "Email" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in participants %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">{% trans "No participants found." %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Initialize DataTables -->
+<script>
+    $(document).ready(function() {
+        $('#participantsTable').DataTable({
+            "paging": true,             // Enable pagination
+            "searching": true,          // Enable search
+            "ordering": true,           // Enable ordering
+            "order": [[0, "asc"]],      // Initial sort
+            "lengthMenu": [10, 25, 50, 100],  // Page length options
+            "language": {
+                "emptyTable": "No participants found.",
+                "search": "Filter records:"
+            }
+        });
+    });
+</script>
+{% endblock %}

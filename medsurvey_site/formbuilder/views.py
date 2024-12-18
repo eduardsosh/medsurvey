@@ -3,10 +3,12 @@ from django.http import HttpResponse, JsonResponse, HttpRequest, HttpResponseFor
 from django.contrib.auth.decorators import login_required
 from .forms import FormCreationForm, FormEditForm, QuestionForm, EditQuestionForm
 from .models import Form, Question, UserForms
+from base.models import User, UserAdditionalData
 from django.urls import reverse
 from django.contrib import messages
 from django.db.models import Max
 from django.utils.translation import gettext_lazy as _
+from .decorators import examiner_required
 
 
 def index(request):
@@ -177,3 +179,40 @@ def move_question_down(request, question_id):
     
     messages.success(request, _("Question moved down successfully."))
     return redirect('edit_questions', form_id=form.id)
+
+@login_required
+def view_my_assigned_forms(request):
+    user = request.user
+    if hasattr(request.user, 'examiner'):
+        messages.warning(request, _("Examiners can not fill out forms"))
+        return redirect('/')
+    
+    my_forms = Form.objects.filter(userforms__user=user)
+    
+    context = {
+        'forms': my_forms
+    }
+    
+    return render(request, "formbuilder/view_my_assigned_forms.html", context=context)
+    
+    
+    
+
+def add_participants(request):
+    pass
+
+@login_required
+@examiner_required
+def view_participants(request, form_id):
+    form_instance = Form.objects.get(id=form_id)
+    assigned_users = User.objects.filter(userforms__form=form_instance)
+    
+    
+    context = {
+        'participants' : assigned_users
+    }
+    return(render(request, 'formbuilder/view_participants.html', context=context))
+
+
+
+

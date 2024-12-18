@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "My forms" %}
+{% endblock %}
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endif %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">{% trans "Your Assigned Forms" %}</h2>
+
+    {% if forms.exists %}
+        <div class="row">
+            {% for form in forms %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ form.title }}</h5>
+                            <p class="card-text">{{ form.description|default:"No description provided." }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn btn-primary">{% trans "View Form" %}</a>
+                            <a href="#" class="btn btn-success">{% trans "Fill Out" %}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            {% trans "You have no assigned forms at the moment." %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
