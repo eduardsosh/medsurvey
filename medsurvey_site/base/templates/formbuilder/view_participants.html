@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load crispy_forms_tags%}
 
 {% block title %}
     {% trans "My forms" %}
 {% endblock %}
 
-{% if messages %}
-{% for message in messages %}
-    <div class="alert alert-{{ message.tags }}" role="alert">
-        {{ message }}
-    </div>
-{% endfor %}
-{% endif %}
-
 {% block content %}
 <div class="container mt-4">
+
+
+    <!-- 1) ADD PARTICIPANT SECTION -->
+    <h2>{% trans "Add Participant" %}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ add_participant_form|crispy }}
+        <button type="submit" class="btn btn-primary">Add Participant</button>
+    </form>
+
+    <hr />
+
+    <!-- 2) PARTICIPANTS TABLE SECTION -->
     <h2>{% trans "Participants" %}</h2>
     <table id="participantsTable" class="table table-striped">
         <thead>
@@ -33,16 +39,10 @@
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.email }}</td>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">{% trans "No participants found." %}</td>
-                </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-
-
 {% endblock %}
 
 {% block scripts %}
@@ -50,11 +50,11 @@
 <script>
     $(document).ready(function() {
         $('#participantsTable').DataTable({
-            "paging": true,             // Enable pagination
-            "searching": true,          // Enable search
-            "ordering": true,           // Enable ordering
-            "order": [[0, "asc"]],      // Initial sort
-            "lengthMenu": [10, 25, 50, 100],  // Page length options
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "order": [[0, "asc"]],
+            "lengthMenu": [10, 25, 50, 100],
             "language": {
                 "emptyTable": "No participants found.",
                 "search": "Filter records:"

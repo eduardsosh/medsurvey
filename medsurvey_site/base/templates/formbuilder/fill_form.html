@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h1>{{ form_obj.title }}</h1>
+    <p>{{ form_obj.description }}</p>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Loop through all questions -->
+        {% for question in questions %}
+            <div class="mb-3">
+                <label class="form-label">
+                    {{ question.title }}
+                    {% if question.mandatory %}
+                        <span class="text-danger">*</span>
+                    {% endif %}
+                </label>
+                
+                <!-- Depending on question.type, render different input elements -->
+                {% if question.type == 0 %}
+                    <!-- TEXT_FIELD -->
+                    <input
+                        type="text"
+                        name="question_{{ question.id }}"
+                        class="form-control"
+                        required="{{ question.mandatory }}"
+                        placeholder="{{ question.description }}"
+                    />
+                
+                {% elif question.type == 1 %}
+                    <!-- TEXT_AREA -->
+                    <textarea
+                        name="question_{{ question.id }}"
+                        class="form-control"
+                        rows="3"
+                        placeholder="{{ question.description }}"
+                        required="{{ question.mandatory }}"
+                    ></textarea>
+                
+                {% elif question.type == 2 %}
+                    <!-- CHOICE (Single choice) -->
+                    <!-- question.options could be a JSON or a dictionary of choices -->
+                    {% for choice in question.options %}
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="radio"
+                                name="question_{{ question.id }}"
+                                id="q_{{ question.id }}_{{ forloop.counter }}"
+                                value="{{ choice }}"
+                                required="{{ question.mandatory }}"
+                            />
+                            <label class="form-check-label" for="q_{{ question.id }}_{{ forloop.counter }}">
+                                {{ choice }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                
+                {% elif question.type == 3 %}
+                    <!-- MCHOICE (Multiple choices) -->
+                    {% for choice in question.options %}
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="question_{{ question.id }}"
+                                id="q_{{ question.id }}_{{ forloop.counter }}"
+                                value="{{ choice }}"
+                            />
+                            <label class="form-check-label" for="q_{{ question.id }}_{{ forloop.counter }}">
+                                {{ choice }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Optionally show question description below field -->
+                {% if question.description %}
+                    <small class="text-muted">{{ question.description }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">
+            {% trans "Submit" %}
+        </button>
+    </form>
+
+</div>
+{% endblock %}

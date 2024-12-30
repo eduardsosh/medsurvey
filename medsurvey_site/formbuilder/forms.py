@@ -1,10 +1,12 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Form, Question
+from .models import Form, Question, UserForms
 import datetime
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Max
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Layout, Field
 
 class FormCreationForm(ModelForm):
     class Meta:
@@ -113,3 +115,24 @@ class EditQuestionForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = ['title', 'description']
+        
+        
+
+
+class AddParticipantForm(forms.Form):
+    personal_code = forms.CharField(
+        label=_("Participant Personal Code"),
+        max_length=12,
+        required=True
+    )
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        # Initialize Crispy Form Helper
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.layout = Layout(
+            Field('personal_code'),
+            Submit('submit', _('Add Participant'), css_class='btn btn-primary')
+        )
