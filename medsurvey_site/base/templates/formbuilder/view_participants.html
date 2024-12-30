@@ -9,7 +9,8 @@
 {% block content %}
 <div class="container mt-4">
 
-
+    <a href="{% url 'view_created_forms' %}" class="btn btn-primary mb-4">{% trans "My forms" %}</a>
+    <hr>
     <!-- 1) ADD PARTICIPANT SECTION -->
     <h2>{% trans "Add Participant" %}</h2>
     <form method="POST">

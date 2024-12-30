@@ -19,7 +19,8 @@
             <div class="d-flex flex-column">
                 <a href="{% url 'edit_form' form.id %}" class="btn btn-sm btn-primary mb-2">{% trans "Edit" %}</a>
                 <a href="{% url 'edit_questions' form.id %}" class="btn btn-sm btn-primary mb-2">{% trans "Edit questions" %}</a>
-                <a href="{% url 'view_participants' form.id %}" class="btn btn-sm btn-primary">{% trans "Participants" %}</a>
+                <a href="{% url 'view_participants' form.id %}" class="btn btn-sm btn-primary mb-2">{% trans "Participants" %}</a>
+                <a href="{% url 'view_answers' form.id %}" class="btn btn-sm btn-primary">{% trans "View answers" %}</a>
             </div>
         </li>
     {% endfor %}

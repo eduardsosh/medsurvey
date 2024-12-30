@@ -14,6 +14,7 @@ urlpatterns = [
     path('question/<int:question_id>/delete/', views.delete_question, name='delete_question'),
     path('my-forms/', views.view_my_assigned_forms, name='my-forms'),
     path('form/<int:form_id>/participants', views.view_participants, name='view_participants'),
-    path('form/<int:form_id>/fill-out', views.fill_form_view, name='fill_form_view')
+    path('form/<int:form_id>/fill-out', views.fill_form_view, name='fill_form_view'),
+    path('form/<int:form_id>/view_answers', views.form_submissions_view, name='view_answers'),
 
 ]

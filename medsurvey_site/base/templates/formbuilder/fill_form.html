@@ -27,7 +27,7 @@
                         type="text"
                         name="question_{{ question.id }}"
                         class="form-control"
-                        required="{{ question.mandatory }}"
+                        {% if question.mandatory %}required{% endif %} 
                         placeholder="{{ question.description }}"
                     />
                 
@@ -38,7 +38,7 @@
                         class="form-control"
                         rows="3"
                         placeholder="{{ question.description }}"
-                        required="{{ question.mandatory }}"
+                        {% if question.mandatory %}required{% endif %} 
                     ></textarea>
                 
                 {% elif question.type == 2 %}
@@ -52,7 +52,7 @@
                                 name="question_{{ question.id }}"
                                 id="q_{{ question.id }}_{{ forloop.counter }}"
                                 value="{{ choice }}"
-                                required="{{ question.mandatory }}"
+                                {% if question.mandatory %}required{% endif %} 
                             />
                             <label class="form-check-label" for="q_{{ question.id }}_{{ forloop.counter }}">
                                 {{ choice }}

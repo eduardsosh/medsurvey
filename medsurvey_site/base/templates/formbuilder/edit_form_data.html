@@ -3,6 +3,8 @@
 {% load i18n %}
 
 {% block content%}
+    <a href="{% url 'view_created_forms' %}" class="btn btn-primary mb-4">{% trans "My forms" %}</a>
+    <hr>
     <h2>{% trans "Edit form" %}</h2>
     <form method="post">
         {% csrf_token %}

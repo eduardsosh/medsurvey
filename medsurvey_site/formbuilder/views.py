@@ -242,53 +242,37 @@ def view_participants(request, form_id):
 
 @login_required
 def fill_form_view(request, form_id):
-    # 1) Get the form
     form_obj = get_object_or_404(Form, id=form_id)
-
-    # (Optional) Check if the user is allowed to fill out this form
-    # For example, if you only want users who have a record in UserForms:
+    
     if not UserForms.objects.filter(user=request.user, form=form_obj).exists():
         messages.error(request, "You are not a participant in this form.")
-        return redirect("home")  # or wherever you want to redirect
+        return redirect("/")  # or wherever you want to redirect
 
-    # 2) Get all the questions for this form, ordered by 'order' if desired
     questions = Question.objects.filter(form=form_obj).order_by('order')
 
     if request.method == "POST":
-        # 3) Create a new Submission object for this user
         submission = Submission.objects.create(
             form=form_obj,
             user=request.user
         )
 
-        # 4) For each question, read the user’s answer from POST data
         for question in questions:
             field_name = f"question_{question.id}"
-
-            # Because of multiple choice or single choice, the user input might differ
-            # We'll handle each question type separately or with one approach
             user_answer = ""
 
             if question.type == Question.QuestionType.TEXT_FIELD:
-                # Single line text
                 user_answer = request.POST.get(field_name, "")
 
             elif question.type == Question.QuestionType.TEXT_AREA:
-                # Multi-line text
                 user_answer = request.POST.get(field_name, "")
 
             elif question.type == Question.QuestionType.CHOICE:
-                # Single choice: user_answer is a single string
-                # e.g., "Yes" or "No"
                 user_answer = request.POST.get(field_name, "")
 
             elif question.type == Question.QuestionType.MCHOICE:
-                # Multiple choice: user_answer is a list, e.g. ["Option1", "Option2"]
-                # We'll join them into a single string, or store JSON, etc.
                 user_selections = request.POST.getlist(field_name)
                 user_answer = ", ".join(user_selections)
 
-            # 5) Create an Answer record
             Answer.objects.create(
                 user=request.user,
                 submission=submission,
@@ -297,12 +281,65 @@ def fill_form_view(request, form_id):
             )
 
         messages.success(request, "Thank you! Your responses have been saved.")
-        return redirect("/")  # Or somewhere else
+        return redirect("/")
 
     else:
-        # 6) Render the form for the user to fill out
         return render(request, "formbuilder/fill_form.html", {
             "form_obj": form_obj,
             "questions": questions
         })
+        
+@login_required
+@examiner_required
+def form_submissions_view(request, form_id):
+    """
+    Show all submissions for a given form (one row per submission), only if
+    the current user is the author of that form.
+    """
+    # 1. Get the form, ensuring that the request.user is the author
+    form = get_object_or_404(Form, pk=form_id)
+    if form.author != request.user:
+        messages.error(request, _("You don't have permissions to view this form!"))
+        return redirect("/")
+
+    # 2. Fetch all questions for this form in a desired order
+    questions = Question.objects.filter(form=form).order_by('order')
+
+    # 3. Fetch all submissions for this form
+    submissions = (
+        Submission.objects
+        .filter(form=form)
+        .select_related('user')  # fetch user info in one query
+        .order_by('-timestamp')
+    )
+
+    # 4. Pre-fetch all answers for these submissions
+    answers = (
+        Answer.objects
+        .filter(submission__in=submissions)
+        .select_related('submission', 'field')
+        .order_by('submission__timestamp', 'field__order')
+    )
+
+    # 5. Build a dictionary: submission_id -> list of Answer objects
+    answers_by_submission = {}
+    for ans in answers:
+        answers_by_submission.setdefault(ans.submission_id, []).append(ans)
+
+    # 6. For each submission, attach a dict: question.id -> answer.answer
+    #    This makes it easy to find the answer to each question in the template.
+    for submission in submissions:
+        # Start empty if no answers
+        submission.answers_dict = {}
+        # Loop over that submission's answers and populate
+        for ans in answers_by_submission.get(submission.id, []):
+            submission.answers_dict[ans.field_id] = ans.answer
+
+    context = {
+        'form': form,
+        'questions': questions,
+        'submissions': submissions,
+    }
+    return render(request, 'formbuilder/form_submissions.html', context)
+
 

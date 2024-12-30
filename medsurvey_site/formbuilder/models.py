@@ -13,7 +13,7 @@ class Form(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     creation_date_time = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
+    description = models.TextField(blank=True,null=True)
     start_date = models.DateField(null=True,blank=True)
     end_date = models.DateField(null=True,blank=True)
     interval = models.IntegerField(choices=Regularity, null=True,blank=True)
@@ -48,7 +48,7 @@ class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     field = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.TextField()
+    answer = models.TextField(null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     
 class Notification(models.Model):

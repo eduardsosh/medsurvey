@@ -7,8 +7,9 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h1>{% trans "Edit Questions" %} - {{ form.title }}</h1>
+    <a href="{% url 'view_created_forms' %}" class="btn btn-primary mb-4">{% trans "My forms" %}</a>
     <hr>
+    <h1>{% trans "Edit Questions" %} - {{ form.title }}</h1>
 
     <!-- Display success/error messages -->
     {% if messages %}
