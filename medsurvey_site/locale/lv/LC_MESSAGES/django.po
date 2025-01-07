@@ -1,0 +1,529 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: .\base\templates\edit_profile.html:9
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-06 21:20+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
+#: .\base\forms.py:10 .\base\forms.py:43
+msgid "Email will be used for verification and password recovery."
+msgstr "E-pasts tiks izmantots pārbaudei"
+
+#: .\base\forms.py:11 .\base\forms.py:44
+msgid "First name"
+msgstr "Vārds"
+
+#: .\base\forms.py:12 .\base\forms.py:45
+msgid "Last name"
+msgstr "Uzvārds"
+
+#: .\base\forms.py:13 .\base\forms.py:46
+msgid "Personal code"
+msgstr "Personas kods"
+
+#: .\base\forms.py:14 .\base\forms.py:47 .\base\templates\profile.html:20
+msgid "Gender"
+msgstr "Dzimums"
+
+#: .\base\forms.py:15
+msgid "I accept the terms and conditions"
+msgstr "Es piekrītu nosacījumiem."
+
+#: .\base\models.py:10
+msgid "Male"
+msgstr "Vīrietis"
+
+#: .\base\models.py:11
+msgid "Female"
+msgstr "Sieviete"
+
+#: .\base\models.py:12
+msgid "Rather not say"
+msgstr "Izvēlos neteikt"
+
+#: .\base\models.py:27
+msgid "Institution that the examiner works for"
+msgstr "Iestāde, kurā strādā ārsts."
+
+#: .\base\templates\auth\login.html:10 .\base\templates\auth\register.html:9
+#: .\base\templates\auth\register.html:13
+msgid "Register"
+msgstr "Reģistrēties"
+
+#: .\base\templates\auth\login.html:14 .\base\templates\base.html:60
+#: .\base\templates\home.html:45
+msgid "Login"
+msgstr "Pieslēgties"
+
+#: .\base\templates\auth\login.html:16
+msgid "Not registered?"
+msgstr "Neesi reģistrējies"
+
+#: .\base\templates\auth\login.html:16
+msgid "register"
+msgstr "reģistrēties"
+
+#: .\base\templates\base.html:40
+msgid "Menu"
+msgstr "Izvēlne"
+
+#: .\base\templates\base.html:46
+#: .\base\templates\formbuilder\edit_form_data.html:6
+#: .\base\templates\formbuilder\edit_questions.html:10
+#: .\base\templates\formbuilder\form_submissions.html:11
+#: .\base\templates\formbuilder\template.html:5
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:5
+#: .\base\templates\formbuilder\view_participants.html:6
+#: .\base\templates\formbuilder\view_participants.html:12
+msgid "My forms"
+msgstr "Manas aptaujas"
+
+#: .\base\templates\base.html:51
+#: .\base\templates\formbuilder\create_form.html:6
+msgid "Create form"
+msgstr "Izveidot aptauju"
+
+#: .\base\templates\base.html:57
+msgid "Logout"
+msgstr "Iziet"
+
+#: .\base\templates\base.html:66
+msgid "MedSurvey"
+msgstr "MedSurvey"
+
+#: .\base\templates\base.html:87 .\base\templates\base.html:90
+msgid "Select language"
+msgstr "Valoda"
+
+#: .\base\templates\base.html:104
+msgid "Switch"
+msgstr "Mainīt"
+
+#: .\base\templates\edit_profile.html:12
+msgid "Edit Profile"
+msgstr "Rediģēt profilu"
+
+#: .\base\templates\edit_profile.html:21
+#: .\base\templates\formbuilder\create_form.html:15
+#: .\base\templates\formbuilder\edit_form_data.html:17
+msgid "Save Changes"
+msgstr "Saglabāt"
+
+#: .\base\templates\edit_profile.html:25
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: .\base\templates\formbuilder\edit_form_data.html:8
+msgid "Edit form"
+msgstr "Rediģēt aptauju"
+
+#: .\base\templates\formbuilder\edit_form_data.html:23
+msgid "Delete Form"
+msgstr "Dzēst aptauju"
+
+#: .\base\templates\formbuilder\edit_questions.html:5
+#: .\base\templates\formbuilder\edit_questions.html:12
+msgid "Edit Questions"
+msgstr "Rediģēt jautājumus"
+
+#: .\base\templates\formbuilder\edit_questions.html:14
+msgid "Existing Questions"
+msgstr "Esošie jautājumi"
+
+#: .\base\templates\formbuilder\edit_questions.html:19
+msgid "Title"
+msgstr "Virsraksts"
+
+#: .\base\templates\formbuilder\edit_questions.html:20
+#: .\base\templates\formbuilder\edit_questions.html:103
+msgid "Type"
+msgstr "Tips"
+
+#: .\base\templates\formbuilder\edit_questions.html:21
+#: .\base\templates\formbuilder\edit_questions.html:109
+msgid "Mandatory"
+msgstr "Obligāts"
+
+#: .\base\templates\formbuilder\edit_questions.html:22
+#: .\base\templates\formbuilder\edit_questions.html:114
+msgid "Options"
+msgstr "Iespējas"
+
+#: .\base\templates\formbuilder\edit_questions.html:23
+msgid "Actions"
+msgstr "Darbības"
+
+#: .\base\templates\formbuilder\edit_questions.html:32
+#: .\formbuilder\models.py:30
+msgid "Text field"
+msgstr "Teksta lauks"
+
+#: .\base\templates\formbuilder\edit_questions.html:34
+#: .\formbuilder\models.py:31
+msgid "Text area"
+msgstr "Liels teksta lauks"
+
+#: .\base\templates\formbuilder\edit_questions.html:36
+#: .\formbuilder\models.py:32
+msgid "Choice"
+msgstr "Izvēle"
+
+#: .\base\templates\formbuilder\edit_questions.html:38
+#: .\formbuilder\models.py:33
+msgid "Multiple choice"
+msgstr "Vairākas izvēles"
+
+#: .\base\templates\formbuilder\edit_questions.html:41
+msgid "Yes,No"
+msgstr "Jā,Nē"
+
+#: .\base\templates\formbuilder\edit_questions.html:50
+msgid "No options"
+msgstr "Nav iespēju"
+
+#: .\base\templates\formbuilder\edit_questions.html:55
+#: .\base\templates\formbuilder\my_created_forms.html:20
+msgid "Edit"
+msgstr "Rediģēt"
+
+#: .\base\templates\formbuilder\edit_questions.html:56
+msgid "Delete"
+msgstr "Dzēst"
+
+#: .\base\templates\formbuilder\edit_questions.html:60
+msgid "Move up"
+msgstr "Uz augšu"
+
+#: .\base\templates\formbuilder\edit_questions.html:63
+msgid "Move down"
+msgstr "Uz leju"
+
+#: .\base\templates\formbuilder\edit_questions.html:72
+msgid "No questions found."
+msgstr "Atrasts neviens jautājums"
+
+#: .\base\templates\formbuilder\edit_questions.html:77
+msgid "Add Question"
+msgstr "Pievienot jautājumu"
+
+#: .\base\templates\formbuilder\edit_questions.html:88
+msgid "Add New Question"
+msgstr "Pievienot jautājumu"
+
+#: .\base\templates\formbuilder\edit_questions.html:89
+#: .\base\templates\formbuilder\edit_questions.html:123
+msgid "Close"
+msgstr "Aizvērt"
+
+#: .\base\templates\formbuilder\edit_questions.html:93
+msgid "Title*"
+msgstr "Virsraksts"
+
+#: .\base\templates\formbuilder\edit_questions.html:98
+msgid "Description"
+msgstr "Apraksts"
+
+#: .\base\templates\formbuilder\edit_questions.html:119
+msgid "Add Option"
+msgstr "Pievienot iespēju"
+
+#: .\base\templates\formbuilder\edit_questions.html:124
+msgid "Save Question"
+msgstr "Saglabāt jautājumu"
+
+#: .\base\templates\formbuilder\fill_form.html:90
+#: .\formbuilder\templates\create_form.html:17
+msgid "Submit"
+msgstr "Iesniegt"
+
+#: .\base\templates\formbuilder\form_submissions.html:6
+#: .\base\templates\formbuilder\form_submissions.html:13
+msgid "Submissions"
+msgstr "Iesniegumi"
+
+#: .\base\templates\formbuilder\form_submissions.html:18
+msgid "Submission ID"
+msgstr "Iesnieguma ID"
+
+#: .\base\templates\formbuilder\form_submissions.html:19
+msgid "Submitted By"
+msgstr "Iesniedza"
+
+#: .\base\templates\formbuilder\form_submissions.html:20
+msgid "Submission Time"
+msgstr "Iesnieguma laiks"
+
+#: .\base\templates\formbuilder\form_submissions.html:56
+msgid "No submissions found."
+msgstr "Neatrasti iesniegumi"
+
+#: .\base\templates\formbuilder\form_submissions.html:57
+msgid "Filter records:"
+msgstr "Filtrēt"
+
+#: .\base\templates\formbuilder\my_created_forms.html:5
+#: .\base\templates\formbuilder\my_created_forms.html:9
+msgid "My Forms"
+msgstr "Manas aptaujas"
+
+#: .\base\templates\formbuilder\my_created_forms.html:17
+msgid "Created on"
+msgstr "Izveidots"
+
+#: .\base\templates\formbuilder\my_created_forms.html:21
+msgid "Edit questions"
+msgstr "Rediģēt jautājumus"
+
+#: .\base\templates\formbuilder\my_created_forms.html:22
+#: .\base\templates\formbuilder\view_participants.html:25
+msgid "Participants"
+msgstr "Dalībnieki"
+
+#: .\base\templates\formbuilder\my_created_forms.html:23
+msgid "View answers"
+msgstr "Skatīt atbildes"
+
+#: .\base\templates\formbuilder\my_created_forms.html:30
+msgid "You haven't created any forms yet."
+msgstr "Jums nav aptauju"
+
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:18
+msgid "Your Assigned Forms"
+msgstr "Aptaujas manu dalību"
+
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:28
+msgid "Form regularity: "
+msgstr "Aptauju periodiskums"
+
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:31
+msgid "View Form"
+msgstr "Skatīt aptauju"
+
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:32
+msgid "Fill Out"
+msgstr "Aizpildīt"
+
+#: .\base\templates\formbuilder\view_my_assigned_forms.html:40
+msgid "You have no assigned forms at the moment."
+msgstr "Jūs neesat pievienots aptaujām"
+
+#: .\base\templates\formbuilder\view_participants.html:15
+#: .\base\templates\formbuilder\view_participants.html:19
+#: .\formbuilder\forms.py:137
+msgid "Add Participant"
+msgstr "Pievienot dalībnieku"
+
+#: .\base\templates\formbuilder\view_participants.html:29
+msgid "Username"
+msgstr "Lietotājvārds"
+
+#: .\base\templates\formbuilder\view_participants.html:30
+msgid "First Name"
+msgstr "Vārds"
+
+#: .\base\templates\formbuilder\view_participants.html:31
+msgid "Last Name"
+msgstr "Uzvārds"
+
+#: .\base\templates\formbuilder\view_participants.html:32
+#: .\base\templates\profile.html:18
+msgid "Email"
+msgstr "Epasts"
+
+#: .\base\templates\formbuilder\view_participants.html:33
+msgid "Remove user"
+msgstr "Noņemt lietotāju"
+
+#: .\base\templates\formbuilder\view_participants.html:45
+msgid "Are you sure you want to remove this participant?"
+msgstr "Vai jūs vēlaties noņemt šo dalībnieku?"
+
+#: .\base\templates\formbuilder\view_participants.html:47
+msgid "Remove"
+msgstr "Noņemt"
+
+#: .\base\templates\home.html:4
+msgid "Main Page"
+msgstr "Galvenā lapa"
+
+#: .\base\templates\home.html:14
+msgid "Welcome,"
+msgstr "Sveicināti,"
+
+#: .\base\templates\home.html:20
+msgid "View Created Forms"
+msgstr "Skatīt izveidotās aptaujas"
+
+#: .\base\templates\home.html:23
+msgid "Create New Form"
+msgstr "Izveidot aptauju"
+
+#: .\base\templates\home.html:29
+msgid "View My Assigned Forms"
+msgstr "Skatīt manu dalību"
+
+#: .\base\templates\home.html:42
+msgid "Welcome to Our Platform!"
+msgstr "Sveicināti mūsu vietnē!"
+
+#: .\base\templates\home.html:43
+msgid "Please log in to continue."
+msgstr "Lūdzu veiciet pieteikšanos, lai turpinātu."
+
+#: .\base\templates\notifications.html:6
+msgid "Notifications"
+msgstr "Paziņojumi"
+
+#: .\base\templates\notifications.html:9
+msgid "Unread Notifications"
+msgstr "Nelasīti paziņojumi"
+
+#: .\base\templates\notifications.html:26
+msgid "Mark as read"
+msgstr "Atzīmēt kā lasītu"
+
+#: .\base\templates\notifications.html:33
+msgid "No unread notifications."
+msgstr "Nav nelasītu paziņojumu"
+
+#: .\base\templates\notifications.html:47
+msgid "Show read notifications"
+msgstr "Rādīt lasītos paziņojumus"
+
+#: .\base\templates\partials\read_notifications.html:12
+msgid "No read notifications."
+msgstr "Nav lasītu paziņojumu"
+
+#: .\base\templates\profile.html:11
+msgid "User Profile"
+msgstr "Lietotāja profils"
+
+#: .\base\templates\profile.html:17
+msgid "Full Name"
+msgstr "Pilns vārds"
+
+#: .\base\templates\profile.html:19
+msgid "Personal number"
+msgstr "Personas kods"
+
+#: .\base\templates\profile.html:21
+msgid "Last Login"
+msgstr "Pēdējā pieslēgšanās"
+
+#: .\base\templates\profile.html:22
+msgid "Account Created"
+msgstr "Profils izveidots"
+
+#: .\base\views.py:33
+msgid "Registration successful."
+msgstr "Reģistrācija veiksmīga"
+
+#: .\base\views.py:36
+msgid "Registration failed. Please correct the errors below."
+msgstr "Reģistrācija neveiksmīga"
+
+#: .\formbuilder\forms.py:34
+msgid "Start date cannot be in the past."
+msgstr "Sākuma datums nevar būt pagātnē"
+
+#: .\formbuilder\forms.py:38
+msgid "End date cannot be in the past."
+msgstr "Beigu datums nevar būt pagātnē"
+
+#: .\formbuilder\forms.py:42
+msgid "End date cannot be before the start date."
+msgstr "Beigu datums nevar būt pirms sākuma datuma"
+
+#: .\formbuilder\forms.py:124
+msgid "Participant Personal Code"
+msgstr "Dalībnieka personas kods"
+
+#: .\formbuilder\models.py:8
+msgid "Daily"
+msgstr "Reizi dienā"
+
+#: .\formbuilder\models.py:9
+msgid "Weekly"
+msgstr "Reizi nedēļā"
+
+#: .\formbuilder\models.py:10
+msgid "Monthly"
+msgstr "Reizi mēnesī"
+
+#: .\formbuilder\templates\create_form.html:9
+#: .\formbuilder\templates\create_form.html:13
+msgid "Create Form"
+msgstr "Izveidot aptauju"
+
+#: .\formbuilder\views.py:141
+msgid "This question is already at the top."
+msgstr "Šis jautājums jau ir pirmais"
+
+#: .\formbuilder\views.py:148
+msgid "Cannot move the question up."
+msgstr "Nevar pārvietot uz augšu"
+
+#: .\formbuilder\views.py:156
+msgid "Question moved up successfully."
+msgstr "Jautājums veiksmīgi pārvietots"
+
+#: .\formbuilder\views.py:167
+msgid "This question is already at the bottom."
+msgstr "Šis jautājums jau ir pēdējais"
+
+#: .\formbuilder\views.py:174
+msgid "Cannot move the question down."
+msgstr "Nevar pārvietot jautājumu"
+
+#: .\formbuilder\views.py:182
+msgid "Question moved down successfully."
+msgstr "Jautājums veiksmīgi pārvietots uz leju"
+
+#: .\formbuilder\views.py:189
+msgid "Examiners can not fill out forms"
+msgstr "Ārsti nevar pildīt aptaujas"
+
+#: .\formbuilder\views.py:224
+msgid "User is already a participant in this form."
+msgstr "Lietotājs jau ir dalībnieks šajā aptaujā"
+
+#: .\formbuilder\views.py:227
+msgid "Participant added successfully!"
+msgstr "Dalībnieks veiksmīgi pievienots"
+
+#: .\formbuilder\views.py:232
+msgid "No user found with the given personal code."
+msgstr "Lietotājs nav atrasts"
+
+#: .\formbuilder\views.py:251
+msgid "You are not a participant in this form."
+msgstr "Jūs neesat dalībnieks šajā aptaujā"
+
+#: .\formbuilder\views.py:260
+msgid "Cannot fill form, it has ended!"
+msgstr "Aptauja ir beigusies!"
+
+#: .\formbuilder\views.py:290
+#, python-brace-format
+msgid ""
+"Cannot fill form, it has already been submitted for this period! Next "
+"available submission: {next_submission_time}"
+msgstr "Nevar! Nākamreiz varēs {next_submission_time}"
+
+#: .\formbuilder\views.py:345
+msgid "You don't have permissions to view this form!"
+msgstr "Jums nav pieejas šai aptaujai"

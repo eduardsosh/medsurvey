@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% for notification in read_notifications %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ notification.title }}</h5>
+      <p class="card-text">{{ notification.text }}</p>
+      <small class="text-muted">{{ notification.time_created }}</small>
+    </div>
+  </div>
+{% empty %}
+  <p class="text-muted">{% trans "No read notifications." %}</p>
+{% endfor %}

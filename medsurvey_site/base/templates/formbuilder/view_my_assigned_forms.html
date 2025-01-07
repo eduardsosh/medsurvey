@@ -25,6 +25,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ form.title }}</h5>
                             <p class="card-text">{{ form.description|default:"No description provided." }}</p>
+                            <p class="card-text"><b>{% trans "Form regularity: " %}</b>{{ form.get_interval_display|default:"This form has no interval." }}</p>
                         </div>
                         <div class="card-footer">
                             <a href="#" class="btn btn-primary">{% trans "View Form" %}</a>

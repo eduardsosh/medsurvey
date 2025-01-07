@@ -51,14 +51,7 @@ class Answer(models.Model):
     answer = models.TextField(null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     
-class Notification(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Sender")
-    recipent = models.ForeignKey(User, on_delete=models.CASCADE, related_name="Reciever")
-    time_created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=200, null=False)
-    text = models.TextField()
-    read = models.BooleanField()
-    form = models.ForeignKey(Form, on_delete=models.CASCADE, null=True)
+
     
 
 

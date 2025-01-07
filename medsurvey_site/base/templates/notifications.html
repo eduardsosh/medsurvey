@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+  <h1>{% trans "Notifications" %}</h1>
+
+  <!-- Unread Notifications Section -->
+  <h2>{% trans "Unread Notifications" %}</h2>
+  <div id="unread-notifications-list">
+    {% for notification in unread_notifications %}
+      <div class="card mb-3" id="notification-{{ notification.id }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ notification.title }}</h5>
+          <p class="card-text">{{ notification.text }}</p>
+          <small class="text-muted">{{ notification.time_created }}</small>
+          <div class="mt-2">
+            <form 
+            method="post" 
+            hx-post="{% url 'mark_notification_as_read' notification.id %}" 
+            hx-target="#notification-{{ notification.id }}" 
+            hx-swap="outerHTML"
+          >
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-sm">
+              {% trans "Mark as read" %}
+            </button>
+          </form>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">{% trans "No unread notifications." %}</p>
+    {% endfor %}
+  </div>
+
+  <hr/>
+
+  <!-- Button to fetch read notifications via HTMX -->
+  <button
+    class="btn btn-secondary"
+    hx-get="{% url 'read_notifications' %}"
+    hx-target="#read-notifications-list"
+    hx-swap="innerHTML"
+    id="showReadNotifications"
+  >
+    {% trans "Show read notifications" %}
+  </button>
+
+  <!-- Container for read notifications partial -->
+  <div id="read-notifications-list" class="mt-3">
+    <!-- Initially empty; filled by HTMX call -->
+  </div>
+
+</div>
+{% endblock content %}

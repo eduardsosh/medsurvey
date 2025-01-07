@@ -16,7 +16,7 @@
     <form method="POST">
         {% csrf_token %}
         {{ add_participant_form|crispy }}
-        <button type="submit" class="btn btn-primary">Add Participant</button>
+        <button type="submit" class="btn btn-primary">{% trans "Add Participant" %}</button>
     </form>
 
     <hr />
@@ -30,6 +30,7 @@
                 <th>{% trans "First Name" %}</th>
                 <th>{% trans "Last Name" %}</th>
                 <th>{% trans "Email" %}</th>
+                <th>{% trans "Remove user" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,13 @@
                     <td>{{ user.first_name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.email }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'remove_participant' form.id user.id %}"
+                        onsubmit="return confirm('{% trans "Are you sure you want to remove this participant?" %}');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">{% trans "Remove" %}</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

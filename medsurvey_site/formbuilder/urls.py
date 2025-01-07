@@ -16,5 +16,6 @@ urlpatterns = [
     path('form/<int:form_id>/participants', views.view_participants, name='view_participants'),
     path('form/<int:form_id>/fill-out', views.fill_form_view, name='fill_form_view'),
     path('form/<int:form_id>/view_answers', views.form_submissions_view, name='view_answers'),
+    path('remove-participant/<int:form_id>/<int:user_id>/', views.remove_participant, name='remove_participant'),
 
 ]

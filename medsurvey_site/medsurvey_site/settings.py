@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1g*%zwsp)@a(qqj*atkq8%z1bzv1#)svhhnb_7k@4&jx!rgx5n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'base',
     'formbuilder',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +68,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'notifications.context_processors.unread_notification_count',
             ],
         },
     },
@@ -117,6 +120,15 @@ USE_I18N = True
 USE_TZ = True
 DATE_FORMAT = "d.m.Y"
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('lv', 'Latvian'),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',  # or wherever your .po/.mo files reside
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -137,3 +149,13 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+from django.contrib.messages import constants as message_constants
+
+MESSAGE_TAGS = {
+    message_constants.ERROR: 'danger',
+    # You can also explicitly set others if you wish:
+    # message_constants.DEBUG: 'debug',
+    # message_constants.INFO: 'info',
+    # message_constants.SUCCESS: 'success',
+    # message_constants.WARNING: 'warning',
+}

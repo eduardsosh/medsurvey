@@ -9,7 +9,8 @@ from django.contrib import messages
 from django.db.models import Max
 from django.utils.translation import gettext_lazy as _
 from .decorators import examiner_required
-
+from django.utils.timezone import now
+from datetime import datetime, timedelta
 
 def index(request):
     return render(request, 'home.html')
@@ -234,6 +235,7 @@ def view_participants(request, form_id):
     
     context = {
         'participants' : assigned_users,
+        'form' : form_instance,
         'add_participant_form' : form,
     }
     return(render(request, 'formbuilder/view_participants.html', context=context))
@@ -243,11 +245,52 @@ def view_participants(request, form_id):
 @login_required
 def fill_form_view(request, form_id):
     form_obj = get_object_or_404(Form, id=form_id)
-    
-    if not UserForms.objects.filter(user=request.user, form=form_obj).exists():
-        messages.error(request, "You are not a participant in this form.")
-        return redirect("/")  # or wherever you want to redirect
 
+    # Check if user is allowed to fill this form
+    if not UserForms.objects.filter(user=request.user, form=form_obj).exists():
+        messages.error(request, _("You are not a participant in this form."))
+        return redirect("/")  # Redirect to a different page if needed
+
+    # Initialize variables
+    next_submission_time = None
+    today = now().date()
+
+    if form_obj.end_date:
+        if form_obj.end_date < today:
+            messages.error(request, _(f"Cannot fill form, it has ended!"))
+            return redirect("my-forms")
+    
+    if form_obj.interval is not None:
+        if form_obj.interval == Form.Regularity.EVERY_DAY:
+            filter_date = today
+            filter_field = "timestamp__date"
+            next_submission_time = today + timedelta(days=1)  # Next day
+
+        elif form_obj.interval == Form.Regularity.EVERY_WEEK:
+            start_of_week = today - timedelta(days=today.weekday())  # Monday of this week
+            filter_date = start_of_week
+            filter_field = "timestamp__date__gte"
+            next_submission_time = start_of_week + timedelta(days=7)  # Next week Monday
+
+        elif form_obj.interval == Form.Regularity.EVERY_MONTH:
+            filter_date = today.replace(day=1)  # First day of the current month
+            filter_field = "timestamp__date__gte"
+            if today.month == 12:  # Handle December (next month is January)
+                next_submission_time = today.replace(year=today.year + 1, month=1, day=1)
+            else:
+                next_submission_time = today.replace(month=today.month + 1, day=1)  # First day of next month
+
+        # Check if a submission already exists for the period
+        already_submitted = Submission.objects.filter(
+            form_id=form_id,
+            user=request.user
+        ).filter(**{filter_field: filter_date}).exists()
+
+        if already_submitted:
+            messages.error(request, _(f"Cannot fill form, it has already been submitted for this period! Next available submission: {next_submission_time}"))
+            return redirect("my-forms")
+        
+    
     questions = Question.objects.filter(form=form_obj).order_by('order')
 
     if request.method == "POST":
@@ -286,7 +329,7 @@ def fill_form_view(request, form_id):
     else:
         return render(request, "formbuilder/fill_form.html", {
             "form_obj": form_obj,
-            "questions": questions
+            "questions": questions,
         })
         
 @login_required
@@ -343,3 +386,16 @@ def form_submissions_view(request, form_id):
     return render(request, 'formbuilder/form_submissions.html', context)
 
 
+@login_required
+def remove_participant(request, form_id , user_id):
+    if request.method == 'POST':
+        user_to_remove = get_object_or_404(User, id=user_id)
+        form_object = get_object_or_404(Form, id=form_id)
+        
+        # Get the userform object in question
+        participant = UserForms.objects.filter(user=user_to_remove, form=form_object)
+        participant.delete()
+        
+
+        messages.success(request, f"Participant {user_to_remove.username} removed successfully.")
+        return redirect("view_participants", form_id)
