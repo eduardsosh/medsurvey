@@ -185,17 +185,40 @@ def move_question_down(request, question_id):
 @login_required
 def view_my_assigned_forms(request):
     user = request.user
-    if hasattr(request.user, 'examiner'):
+    # If this user is an examiner, they should not fill out forms
+    if hasattr(user, 'examiner'):
         messages.warning(request, _("Examiners can not fill out forms"))
         return redirect('/')
     
-    my_forms = Form.objects.filter(userforms__user=user)
-    
+    assigned_forms = Form.objects.filter(userforms__user=user)
+
+    # Build a list of dictionaries, each containing the form and info about access
+    form_info_list = []
+    for form in assigned_forms:
+        denial_reason_or_false = deny_access_to_form(user, form.id)
+        
+        if denial_reason_or_false is False:
+            # Means the user can fill out the form
+            can_fill = True
+            error_code = ""
+        else:
+            # Means the user cannot fill out the form; store the reason
+            can_fill = False
+            error_code = denial_reason_or_false
+        
+        form_info_list.append({
+            'form': form,
+            'can_fill': can_fill,
+            'error_code': error_code,
+        })
+
+    # Pass this list to your template
     context = {
-        'forms': my_forms
+        'forms': form_info_list
     }
     
     return render(request, "formbuilder/view_my_assigned_forms.html", context=context)
+
     
 
 
@@ -242,23 +265,21 @@ def view_participants(request, form_id):
 
 
 
-@login_required
-def fill_form_view(request, form_id):
+
+def deny_access_to_form(user_id, form_id):
+    """Check if a user can fill out a form that has periodicty"""
     form_obj = get_object_or_404(Form, id=form_id)
-
-    # Check if user is allowed to fill this form
-    if not UserForms.objects.filter(user=request.user, form=form_obj).exists():
-        messages.error(request, _("You are not a participant in this form."))
-        return redirect("/")  # Redirect to a different page if needed
-
-    # Initialize variables
     next_submission_time = None
     today = now().date()
 
     if form_obj.end_date:
         if form_obj.end_date < today:
-            messages.error(request, _(f"Cannot fill form, it has ended!"))
-            return redirect("my-forms")
+            return _("You cannot fill this form, it has ended!")
+        
+    if form_obj.start_date:
+        if form_obj.start_date > today:
+            return _("You cannot fill this form, it has not started yet!")
+
     
     if form_obj.interval is not None:
         if form_obj.interval == Form.Regularity.EVERY_DAY:
@@ -283,13 +304,28 @@ def fill_form_view(request, form_id):
         # Check if a submission already exists for the period
         already_submitted = Submission.objects.filter(
             form_id=form_id,
-            user=request.user
+            user=user_id
         ).filter(**{filter_field: filter_date}).exists()
 
         if already_submitted:
-            messages.error(request, _(f"Cannot fill form, it has already been submitted for this period! Next available submission: {next_submission_time}"))
-            return redirect("my-forms")
+            return _(f"Already submitted! Next available date {next_submission_time}")
+    else:
+        return False
+    
+
+@login_required
+def fill_form_view(request, form_id):
+    form_obj = get_object_or_404(Form, id=form_id)
+
+    deny_to_fill = deny_access_to_form(request.user, form_id)
+    if deny_to_fill:
+        messages.error(request, deny_to_fill)
+        return redirect("my-forms") 
         
+    # Check if user is allowed to fill this form
+    if not UserForms.objects.filter(user=request.user, form=form_obj).exists():
+        messages.error(request, _("You are not a participant in this form."))
+        return redirect("/") 
     
     questions = Question.objects.filter(form=form_obj).order_by('order')
 

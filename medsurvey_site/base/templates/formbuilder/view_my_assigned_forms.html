@@ -6,30 +6,53 @@
 {% endblock %}
 
 {% if messages %}
-{% for message in messages %}
+  {% for message in messages %}
     <div class="alert alert-{{ message.tags }}" role="alert">
-        {{ message }}
+      {{ message }}
     </div>
-{% endfor %}
+  {% endfor %}
 {% endif %}
 
 {% block content %}
 <div class="container mt-4">
     <h2 class="mb-4">{% trans "Your Assigned Forms" %}</h2>
 
-    {% if forms.exists %}
+    {# Because 'forms' is now a list, check it with 'if forms' #}
+    {% if forms %}
         <div class="row">
-            {% for form in forms %}
+            {% for form_info in forms %}
                 <div class="col-md-6 mb-4">
                     <div class="card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{ form.title }}</h5>
-                            <p class="card-text">{{ form.description|default:"No description provided." }}</p>
-                            <p class="card-text"><b>{% trans "Form regularity: " %}</b>{{ form.get_interval_display|default:"This form has no interval." }}</p>
+                            <h5 class="card-title">{{ form_info.form.title }}</h5>
+                            <p class="card-text">
+                                {{ form_info.form.description|default:"No description provided." }}
+                            </p>
+                            <p class="card-text">
+                                <b>{% trans "Form regularity: " %}</b>
+                                {{ form_info.form.get_interval_display|default:"This form has no interval." }}
+                            </p>
+                            <p class="card-text">
+                                <b>{% trans "Institution: " %}</b>
+                                {{ form_info.form.institution|default:"No institution" }}
+                            </p>
+                            <p class="card-text">
+                                <b>{% trans "Autors: " %}</b>
+                                {{ form_info.form.author|default:"Nav norādīts autors" }}
+                            </p>
                         </div>
                         <div class="card-footer">
-                            <a href="#" class="btn btn-primary">{% trans "View Form" %}</a>
-                            <a href="{% url 'fill_form_view' form.id%}" class="btn btn-success">{% trans "Fill Out" %}</a>
+                            {% if form_info.can_fill %}
+                                <a href="{% url 'fill_form_view' form_info.form.id %}"
+                                   class="btn btn-success">
+                                   {% trans "Fill Out" %}
+                                </a>
+                            {% else %}
+                                <button class="btn btn-danger" disabled>
+                                    {% trans "Cannot fill" %}:
+                                    {{ form_info.error_code }}
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

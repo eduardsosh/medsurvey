@@ -13,7 +13,7 @@ class UserAdditionalData(models.Model):
     base_user = models.OneToOneField(User, on_delete=models.CASCADE,null=False)
     first_name = models.CharField("First name",max_length=256, null=False, blank=False)
     last_name = models.CharField("Last name",max_length=256, null=False, blank=False)
-    personal_code = models.CharField("Personal code",max_length=12, null=False, blank=False, default="000000-00000")
+    personal_code = models.CharField("Personal code",max_length=12, null=False, blank=False, default="000000-00000", unique=True)
     gender = models.IntegerField("Gender",choices=Gender, null=False, blank=False)
 
 
